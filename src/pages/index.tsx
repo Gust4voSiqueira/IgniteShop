@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { HomeContainer, Product } from '@/styles/pages/home'
 import Image from 'next/image'
 import { useKeenSlider } from 'keen-slider/react'
@@ -6,8 +7,10 @@ import { stripe } from '@/lib/stripe'
 import { GetStaticProps } from 'next'
 
 import Stripe from 'stripe'
-import Link from 'next/link'
 import Head from 'next/head'
+import { Handbag, X } from 'phosphor-react'
+import { CartContext } from '@/contexts/CartContext'
+import { useContext } from 'react'
 
 interface IHomeProps {
   products: {
@@ -19,6 +22,7 @@ interface IHomeProps {
 }
 
 export default function Home({ products }: IHomeProps) {
+  const { addProduct, removeProduct, cart } = useContext(CartContext)
   const [sliderRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -35,20 +39,38 @@ export default function Home({ products }: IHomeProps) {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            <Link
-              href={`/product/${product.id}`}
-              key={product.id}
-              prefetch={false}
-            >
-              <Product className="keen-slider__slide">
-                <Image src={product.imageUrl} alt="" width={520} height={480} />
+            // <Link
+            //   href={`/product/${product.id}`}
+            //   key={product.id}
+            //   prefetch={false}
+            // >
+            <Product className="keen-slider__slide" key={product.id}>
+              <Image src={product.imageUrl} alt="" width={520} height={480} />
 
-                <footer>
+              <footer>
+                <div>
                   <strong>{product.name}</strong>
                   <span>{product.price}</span>
-                </footer>
-              </Product>
-            </Link>
+                </div>
+
+                {!cart.some((productCart) => productCart.id === product.id) ? (
+                  <button
+                    className="addProduct"
+                    onClick={() => addProduct(product)}
+                  >
+                    <Handbag size={30} color="#FFF" />
+                  </button>
+                ) : (
+                  <button
+                    className="removeProduct"
+                    onClick={() => removeProduct(product)}
+                  >
+                    <X size={30} color="#FFF" />
+                  </button>
+                )}
+              </footer>
+            </Product>
+            // </Link>
           )
         })}
       </HomeContainer>

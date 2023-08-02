@@ -25,6 +25,7 @@ export const Product = styled('div', {
 
   footer: {
     position: 'absolute',
+    cursor: 'default',
     bottom: '0.25rem',
     left: '0.25rem',
     right: '0.25rem',
@@ -42,15 +43,33 @@ export const Product = styled('div', {
     opacity: 0,
     transition: 'all 0.2s ease-in-out',
 
-    strong: {
-      fontSize: '$lg',
-      color: '$gray100',
+    div: {
+      display: 'flex',
+      flexDirection: 'column',
+
+      strong: {
+        fontSize: '$lg',
+        color: '$gray100',
+      },
+
+      span: {
+        fontSize: '$xl',
+        fontWeight: 'bold',
+        color: '$green300',
+      },
     },
 
-    span: {
-      fontSize: '$xl',
-      fontWeight: 'bold',
-      color: '$green300',
+    button: {
+      padding: 7,
+      borderRadius: 5,
+    },
+
+    '.addProduct': {
+      backgroundColor: '$green500',
+    },
+
+    '.removeProduct': {
+      backgroundColor: '$red500',
     },
   },
 
@@ -58,6 +77,14 @@ export const Product = styled('div', {
     footer: {
       transform: 'translateY(0%)',
       opacity: 1,
+
+      button: {
+        cursor: 'pointer',
+      },
+
+      '.addProduct': {
+        backgroundColor: '$green500',
+      },
     },
   },
 })

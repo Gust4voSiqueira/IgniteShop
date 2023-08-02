@@ -1,16 +1,12 @@
 import { CartContext } from '@/contexts/CartContext'
-import {
-  FooterCart,
-  ImageContainer,
-  InfoProductContainer,
-  ProductCartContainer,
-} from '@/styles/components/cart'
+import { EmptyCart, ProductCartContainer } from '@/styles/components/cart'
 import { Close, Content, Overlay } from '@/styles/pages/app'
 import * as Dialog from '@radix-ui/react-dialog'
-import Image from 'next/image'
-import { X } from 'phosphor-react'
-import { useContext } from 'react'
-import { EmptyCart } from './sections/emptyCart'
+import axios from 'axios'
+import { Handbag, X } from 'phosphor-react'
+import { useContext, useState } from 'react'
+import { ProductCart } from './sections/product/_index'
+import { FooterCartSection } from './sections/footerCart/_index'
 
 interface IProduct {
   id: string
@@ -19,50 +15,48 @@ interface IProduct {
   price: string
 }
 
-interface IHandleCart {
-  cart: IProduct[]
+interface IRenderCartProducts {
+  products: IProduct[]
   removeProduct: (product: IProduct) => void
 }
 
-function HandleCart({ cart, removeProduct }: IHandleCart) {
-  if (cart.length === 0) return <EmptyCart />
-
+function RenderCartProducts({ products, removeProduct }: IRenderCartProducts) {
   return (
-    <div>
-      {cart.map((product) => {
-        return (
-          <ProductCartContainer key={product.id}>
-            <ImageContainer>
-              <Image src={product.imageUrl} alt="" width={100} height={110} />
-            </ImageContainer>
-
-            <InfoProductContainer>
-              <span>{product.name}</span>
-              <b>{product.price}</b>
-
-              <button onClick={() => removeProduct(product)}>Remover</button>
-            </InfoProductContainer>
-          </ProductCartContainer>
-        )
-      })}
-
-      <FooterCart>
-        <div>
-          <span className="quantitieText">Quantidade</span>
-          <span className="totalValue">3 itens</span>
-        </div>
-
-        <div>
-          <b className="totalValue">Valor total</b>
-          <h3>R$ 270,00</h3>
-        </div>
-      </FooterCart>
-    </div>
+    <>
+      {products.map((product) => (
+        <ProductCartContainer key={product.id}>
+          <ProductCart product={product} removeProduct={removeProduct} />
+        </ProductCartContainer>
+      ))}
+    </>
   )
 }
 
 export function Cart() {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
   const { cart, removeProduct } = useContext(CartContext)
+
+  async function handleBuyProduct() {
+    try {
+      setIsCreatingCheckoutSession(true)
+
+      const priceIds = cart.map((product) => product.defaultPriceId)
+
+      const response = await axios.post('/api/checkout', {
+        priceIds,
+      })
+
+      const { checkoutUrl } = response.data
+
+      window.location.href = checkoutUrl
+    } catch (err) {
+      console.log(err)
+
+      setIsCreatingCheckoutSession(false)
+      alert('Falha ao redirecionar ao checkout!')
+    }
+  }
 
   return (
     <Dialog.Portal>
@@ -72,7 +66,22 @@ export function Cart() {
         <Close>
           <X color="#8D8D99" size={28} weight="bold" />
         </Close>
-        <HandleCart cart={cart} removeProduct={removeProduct} />
+
+        {cart.length > 0 ? (
+          <RenderCartProducts products={cart} removeProduct={removeProduct} />
+        ) : (
+          <EmptyCart>
+            <Handbag size={120} weight="fill" />
+            <h3>Parece que não há nada na sua sacola.</h3>
+          </EmptyCart>
+        )}
+
+        {cart.length > 0 && (
+          <FooterCartSection
+            isCreatingCheckoutSession={isCreatingCheckoutSession}
+            handleBuyProduct={handleBuyProduct}
+          />
+        )}
       </Content>
     </Dialog.Portal>
   )

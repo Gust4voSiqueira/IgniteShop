@@ -1,15 +1,15 @@
+import { CartContext } from '@/contexts/CartContext'
 import { stripe } from '@/lib/stripe'
 import {
   ImageContainer,
   ProductContainer,
   ProductDetails,
 } from '@/styles/pages/product'
-import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useContext } from 'react'
 import Stripe from 'stripe'
 
 interface IProductProps {
@@ -24,29 +24,11 @@ interface IProductProps {
 }
 
 export default function Product({ product }: IProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
   const { isFallback } = useRouter()
+  const { cart, addProduct, removeProduct } = useContext(CartContext)
 
   if (isFallback) {
     return <p>Loading...</p>
-  }
-
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post('/api/checkout', {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (err) {
-      setIsCreatingCheckoutSession(false)
-      alert('Falha ao redirecionar ao checkout!')
-    }
   }
 
   return (
@@ -65,12 +47,21 @@ export default function Product({ product }: IProductProps) {
 
           <p>{product.description}</p>
 
-          <button
-            disabled={isCreatingCheckoutSession}
-            onClick={handleBuyProduct}
-          >
-            Comprar agora
-          </button>
+          {!cart.some((productCart) => productCart.id === product.id) ? (
+            <button
+              onClick={() => addProduct(product)}
+              className="addBagButton"
+            >
+              Colocar na sacola
+            </button>
+          ) : (
+            <button
+              onClick={() => removeProduct(product)}
+              className="removeBagButton"
+            >
+              Remover da sacola
+            </button>
+          )}
         </ProductDetails>
       </ProductContainer>
     </>

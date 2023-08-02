@@ -1,13 +1,23 @@
 import { styled } from '..'
-import { Dimensions } from 'react-native'
 
-const windowWidth = Dimensions.get('window').width
+export const EmptyCart = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  h3: {
+    fontSize: '$xl',
+  },
+})
 
 export const ProductCartContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   marginTop: '2rem',
+  width: '100%',
 })
 
 export const ImageContainer = styled('div', {
@@ -59,8 +69,7 @@ export const FooterCart = styled('footer', {
   flexDirection: 'column',
   position: 'absolute',
   bottom: 70,
-  width: calc('35vw' - 50),
-  backgroundColor: '#fff',
+  width: '85%',
 
   div: {
     display: 'flex',
@@ -77,6 +86,22 @@ export const FooterCart = styled('footer', {
 
     h3: {
       fontSize: '$xl',
+    },
+  },
+
+  '.finnallyButton': {
+    backgroundColor: '$green500',
+    padding: 20,
+    borderRadius: 7,
+
+    color: '$white',
+    fontWeight: 'bold',
+    fontSize: 18,
+
+    '&:hover': {
+      transition: '0.3s',
+      cursor: 'pointer',
+      backgroundColor: '$green700',
     },
   },
 })

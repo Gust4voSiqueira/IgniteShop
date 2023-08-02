@@ -15,6 +15,7 @@ export const { styled, getCssText, globalCss } = createStitches({
       green300: '#00b37e',
 
       red500: '#DF0808',
+      red700: '#C80404',
     },
 
     fontSizes: {

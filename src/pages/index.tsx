@@ -11,6 +11,7 @@ import Head from 'next/head'
 import { Handbag, X } from 'phosphor-react'
 import { CartContext } from '@/contexts/CartContext'
 import { useContext } from 'react'
+import Link from 'next/link'
 
 interface IHomeProps {
   products: {
@@ -18,6 +19,7 @@ interface IHomeProps {
     name: string
     imageUrl: string
     price: string
+    defaultPriceId: string
   }[]
 }
 
@@ -39,13 +41,10 @@ export default function Home({ products }: IHomeProps) {
       <HomeContainer ref={sliderRef} className="keen-slider">
         {products.map((product) => {
           return (
-            // <Link
-            //   href={`/product/${product.id}`}
-            //   key={product.id}
-            //   prefetch={false}
-            // >
             <Product className="keen-slider__slide" key={product.id}>
-              <Image src={product.imageUrl} alt="" width={520} height={480} />
+              <Link href={`/product/${product.id}`} prefetch={false}>
+                <Image src={product.imageUrl} alt="" width={520} height={480} />
+              </Link>
 
               <footer>
                 <div>
@@ -70,7 +69,6 @@ export default function Home({ products }: IHomeProps) {
                 )}
               </footer>
             </Product>
-            // </Link>
           )
         })}
       </HomeContainer>
@@ -95,6 +93,7 @@ export const getStaticProps: GetStaticProps = async () => {
         style: 'currency',
         currency: 'BRL',
       }).format(price.unit_amount! / 100),
+      defaultPriceId: price.id,
     }
   })
 

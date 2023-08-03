@@ -1,6 +1,13 @@
 import { CartContext } from '@/contexts/CartContext'
-import { EmptyCart, ProductCartContainer } from '@/styles/components/cart'
-import { Close, Content, Overlay } from '@/styles/pages/app'
+import {
+  Close,
+  Content,
+  EmptyCart,
+  Overlay,
+  ProductCartContainer,
+  ProductsSection,
+  Title,
+} from '@/styles/components/cart'
 import * as Dialog from '@radix-ui/react-dialog'
 import axios from 'axios'
 import { Handbag, X } from 'phosphor-react'
@@ -22,13 +29,13 @@ interface IRenderCartProducts {
 
 function RenderCartProducts({ products, removeProduct }: IRenderCartProducts) {
   return (
-    <>
+    <ProductsSection>
       {products.map((product) => (
         <ProductCartContainer key={product.id}>
           <ProductCart product={product} removeProduct={removeProduct} />
         </ProductCartContainer>
       ))}
-    </>
+    </ProductsSection>
   )
 }
 
@@ -62,7 +69,7 @@ export function Cart() {
     <Dialog.Portal>
       <Overlay />
       <Content>
-        <Dialog.Title>Sacola de compras</Dialog.Title>
+        <Title>Sacola de compras</Title>
         <Close>
           <X color="#8D8D99" size={28} weight="bold" />
         </Close>

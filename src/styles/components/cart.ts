@@ -1,5 +1,44 @@
 import { styled } from '..'
 
+import * as Dialog from '@radix-ui/react-dialog'
+
+export const Title = styled(Dialog.Title, {
+  paddingBottom: 30,
+})
+
+export const Overlay = styled(Dialog.Overlay, {
+  position: 'fixed',
+  width: '100vw',
+  height: '100vh',
+  inset: 0,
+  backgroundColor: '#00000075',
+})
+
+export const Content = styled(Dialog.Content, {
+  width: '30vw',
+  height: '100vh',
+  backgroundColor: '$gray800',
+
+  position: 'fixed',
+  top: 0,
+  right: 0,
+
+  padding: 50,
+  paddingRight: 20,
+  paddingTop: 80,
+})
+
+export const Close = styled(Dialog.Close, {
+  position: 'absolute',
+  top: 30,
+  right: 30,
+
+  backgroundColor: 'transparent',
+  border: 0,
+  lineHeight: 0,
+  cursor: 'pointer',
+})
+
 export const EmptyCart = styled('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -12,11 +51,16 @@ export const EmptyCart = styled('div', {
   },
 })
 
+export const ProductsSection = styled('section', {
+  height: '65%',
+  overflow: 'auto',
+})
+
 export const ProductCartContainer = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  marginTop: '2rem',
+  marginTop: '1rem',
   width: '100%',
 })
 

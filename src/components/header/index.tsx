@@ -1,4 +1,3 @@
-import { Header } from '@/styles/pages/app'
 import Image from 'next/image'
 import * as Dialog from '@radix-ui/react-dialog'
 import { Handbag } from 'phosphor-react'
@@ -7,6 +6,7 @@ import { Cart } from '../cart'
 import logoImg from '../../assets/logo.svg'
 import { useContext } from 'react'
 import { CartContext } from '@/contexts/CartContext'
+import { Header } from '@/styles/components/header'
 
 export function HeaderComponent() {
   const { cart } = useContext(CartContext)

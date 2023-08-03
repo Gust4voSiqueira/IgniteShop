@@ -1,34 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Ignite Shop 🛍️
 
-First, run the development server:
+Projeto desenvolvido durante o programa de aceleração de carreira **Ignite** da **Rocketseat**.
 
+## Tecnologias Utilizadas
+Este projeto foi construído com as seguintes tecnologias:
+- **Next.js:** Framework React com foco em renderização no lado do servidor.
+- **Stripe:** Plataforma de pagamento online para empresas.
+- **Axios:** Biblioteca HTTP para fazer requisições.
+- **TypeScript:** Superset JavaScript que traz tipagem estática.
+- **Radix UI:** Conjunto de componentes para construção de interfaces.
+- **Keen Slider:** Biblioteca para criação de carrosséis interativos.
+
+## Rodando o Projeto
+Para executar o projeto localmente, siga os passos abaixo:
+
+**Instale o Node:** Certifique-se de que o Node.js está instalado em sua máquina.
+
+**Conta no Stripe:** Você precisa possuir uma conta no Stripe para a integração de pagamento.
+
+Após cumprir os requisitos acima, siga os passos:
+
+### 1. Clonar o repositório
+Abra o terminal e execute o seguinte comando para clonar o projeto:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+  git clone https://github.com/Gust4voSiqueira/Ignite-Shop.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar Dependências
+Navegue para o diretório do projeto:
+```bash
+  cd Ignite-Shop
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Instale as dependências utilizando o npm:
+```bash
+  npm install
+```
+### 3. Configurar Chaves Secretas do Stripe
+Serão necessárias chaves secretas do Stripe para a integração. Siga esses passos:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. Acesse a sua conta Stripe e vá para a aba Desenvolvedores > Chaves da API.
+2. Crie um arquivo chamado .env.local na raiz do projeto.
+3. Adicione as chaves da seguinte forma:
 
-## Learn More
+```bash
+    NEXT_KEY_STRIPE_PUBLIC=sua_chave_publica
+    NEXT_KEY_STRIPE_SECRET=sua_chave_secreta
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 4. Cadastrar Produtos no Stripe
+Acesse a aba **Produtos** no painel do Stripe e cadastre os produtos necessários.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### 5. Executar a Aplicação
+Finalmente, execute a aplicação com o seguinte comando:
+```bash
+    npm run dev
+```
